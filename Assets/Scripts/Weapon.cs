@@ -45,12 +45,12 @@ public class Weapon : MonoBehaviour
     {
         canShoot = false;
         //if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
-        // {
-        //     PlayMuzzleFlash();
-        //     weaponShotAudio.Play();
-        //     ProcessRaycast();
-        //     //ammoSlot.ReduceCurrentAmmo(ammoType);
-        // }
+        {
+            //PlayMuzzleFlash();
+            //weaponShotAudio.Play();
+            ProcessRaycast();
+            //ammoSlot.ReduceCurrentAmmo(ammoType);
+        }
         yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
         
@@ -66,9 +66,11 @@ public class Weapon : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
         {
-            CreateHitImpact(hit);
+            //CreateHitImpact(hit);
             EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
+            Debug.Log("I hit: "+ hit.transform.name);
             if (target == null) return;
+            
             //call a method on EnemyHealth that decreases the enemy's health
             target.TakeDamage(damage);
         }

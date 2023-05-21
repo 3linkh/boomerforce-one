@@ -10,7 +10,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float turnSpeed = 5f;
     AudioSource provokedAudioSource;
     NavMeshAgent navMeshAgent;
-    CapsuleCollider capsuleCollider;
+    
+    BoxCollider boxCollider;
 
     float distanceToTarget = Mathf.Infinity;
 
@@ -22,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
+        boxCollider = GetComponent<BoxCollider>();
         health = GetComponent<EnemyHealth>();
         target = FindObjectOfType<PlayerHealth>().transform;
         provokedAudioSource = GetComponent<AudioSource>();
@@ -36,7 +37,7 @@ public class EnemyAI : MonoBehaviour
         {
             enabled = false;
             navMeshAgent.enabled = false;
-            capsuleCollider.enabled = false;
+            boxCollider.enabled = false;
 
         }
         distanceToTarget = Vector3.Distance(target.position, transform.position);
@@ -99,7 +100,7 @@ public class EnemyAI : MonoBehaviour
     void ProvokedSound()
     {
         {
-            provokedAudioSource.Play();
+            //provokedAudioSource.Play();
         }
     }
 }
