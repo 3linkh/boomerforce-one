@@ -17,7 +17,7 @@ private void Start()
 public void TakeDamage(float damage)
 {
     hitPoints -= damage;
-    //damageAudio.Play();
+    damageAudio.Play();
     if (hitPoints <= 0)
     {
         //GetComponent<DeathHandler>().HandleDeath();

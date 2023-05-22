@@ -100,7 +100,7 @@ public class EnemyAI : MonoBehaviour
     void ProvokedSound()
     {
         {
-            //provokedAudioSource.Play();
+            provokedAudioSource.Play();
         }
     }
 }
