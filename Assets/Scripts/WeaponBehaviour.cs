@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class WeaponBehaviour : MonoBehaviour
 {
+    [SerializeField] WeaponSO weaponScriptableObject;
+
     [SerializeField] Camera FPCamera;
     [SerializeField] float range = 100f;
     [SerializeField] float damage = 30f;
@@ -19,6 +21,14 @@ public class Weapon : MonoBehaviour
 
     bool canShoot = true;
 
+    private void Start() 
+    {
+        //weaponShotAudio = weaponScriptableObject.fireSound; TODO Fix this should be a clip I think
+        range = weaponScriptableObject.range;
+        damage = weaponScriptableObject.damage;
+        timeBetweenShots = weaponScriptableObject.timeBetweenShots;
+    }
+    
     private void OnEnable() 
     {
         canShoot = true;
@@ -29,10 +39,21 @@ public class Weapon : MonoBehaviour
     {
         DisplayAmmo();
 
-        if (Input.GetMouseButtonDown(0) && canShoot == true)
-        {          
-            StartCoroutine(Shoot());  
+        if (weaponScriptableObject.automatic)
+        {
+            if (Input.GetMouseButton(0) && canShoot == true)
+            StartCoroutine(ShootAutomatic());
         }
+        
+
+        if (!weaponScriptableObject.automatic)
+        {
+            if (Input.GetMouseButtonDown(0) && canShoot == true)
+            {          
+                StartCoroutine(ShootSingle());  
+            }
+        }
+        
         
     }
     private void DisplayAmmo()
@@ -41,7 +62,7 @@ public class Weapon : MonoBehaviour
         //ammoText.text = currentAmmo.ToString();
     }
 
-    IEnumerator Shoot ()
+    IEnumerator ShootSingle () // change to shoot singlefire
     {
         canShoot = false;
         //if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
@@ -54,6 +75,20 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
         
+    }
+
+    IEnumerator ShootAutomatic()
+    {
+       canShoot = false;
+        //if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
+        {
+            //PlayMuzzleFlash();
+            weaponShotAudio.Play();
+            ProcessRaycast();
+            //ammoSlot.ReduceCurrentAmmo(ammoType);
+        }
+        yield return new WaitForSeconds(timeBetweenShots);
+        canShoot = true;
     }
 
     private void PlayMuzzleFlash()

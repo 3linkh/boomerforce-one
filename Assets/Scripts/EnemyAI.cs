@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     
     BoxCollider boxCollider;
 
-    float distanceToTarget = Mathf.Infinity;
+    public float distanceToTarget = Mathf.Infinity;
 
     bool isProvoked = false;
 
