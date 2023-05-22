@@ -47,7 +47,7 @@ public class Weapon : MonoBehaviour
         //if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
         {
             //PlayMuzzleFlash();
-            //weaponShotAudio.Play();
+            weaponShotAudio.Play();
             ProcessRaycast();
             //ammoSlot.ReduceCurrentAmmo(ammoType);
         }
