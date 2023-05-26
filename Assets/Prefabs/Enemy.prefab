@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1890397449857395899}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 1951060008617384296}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2060739604970372790
 BoxCollider:
@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseRange: 5
   turnSpeed: 5
+  distanceToTarget: Infinity
 --- !u!114 &2060739604970372749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede8b85d2278f414a92dd3c2e0bb4f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeDuration: 5
+  objectRenderer: {fileID: 0}
   hitPoints: 100
+  isDead: 0
 --- !u!114 &2060739604970372748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f144e55ad1731f24989abdfea22ab299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 3
   damage: 40
 --- !u!82 &1890397449857395899
 AudioSource:
@@ -285,6 +290,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b15977b3526268147bd753042bd4d393, type: 3}
       propertyPath: m_Name
       value: Mutant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613815499662603714, guid: b15977b3526268147bd753042bd4d393, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

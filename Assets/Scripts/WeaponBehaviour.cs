@@ -15,9 +15,10 @@ public class WeaponBehaviour : MonoBehaviour
     [SerializeField] GameObject hitEffect;
     //[SerializeField] Ammo ammoSlot;
     //[SerializeField] AmmoType ammoType;
-    [SerializeField] float timeBetweenShots = 0.5f;
+    public float timeBetweenShots = 0.5f;
     [SerializeField] TextMeshProUGUI ammoText;
     AudioSource weaponShotAudio;
+    Animator animator;
 
     bool canShoot = true;
 
@@ -27,6 +28,7 @@ public class WeaponBehaviour : MonoBehaviour
         range = weaponScriptableObject.range;
         damage = weaponScriptableObject.damage;
         timeBetweenShots = weaponScriptableObject.timeBetweenShots;
+        animator = GetComponentInChildren<Animator>();
     }
     
     private void OnEnable() 
@@ -42,7 +44,8 @@ public class WeaponBehaviour : MonoBehaviour
         if (weaponScriptableObject.automatic)
         {
             if (Input.GetMouseButton(0) && canShoot == true)
-            StartCoroutine(ShootAutomatic());
+                StartCoroutine(ShootAutomatic());
+                
         }
         
 
@@ -70,9 +73,12 @@ public class WeaponBehaviour : MonoBehaviour
             //PlayMuzzleFlash();
             weaponShotAudio.Play();
             ProcessRaycast();
+            animator.SetTrigger("fireWeapon");
+            
             //ammoSlot.ReduceCurrentAmmo(ammoType);
         }
         yield return new WaitForSeconds(timeBetweenShots);
+        animator.SetTrigger("stopFireWeapon");
         canShoot = true;
         
     }
@@ -85,9 +91,12 @@ public class WeaponBehaviour : MonoBehaviour
             //PlayMuzzleFlash();
             weaponShotAudio.Play();
             ProcessRaycast();
+            animator.SetTrigger("fireWeapon");
+            
             //ammoSlot.ReduceCurrentAmmo(ammoType);
         }
         yield return new WaitForSeconds(timeBetweenShots);
+        animator.SetTrigger("stopFireWeapon");
         canShoot = true;
     }
 
