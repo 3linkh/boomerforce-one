@@ -7,11 +7,13 @@ public class PickUpDetails : MonoBehaviour
     public PowerUpSO powerUpSO;
     float healAmount;
     float speedMultiplier;
+    public float powerUpDuration;
     private void Awake() 
     {
         speedMultiplier = powerUpSO.effectMultiplier;
         healAmount = powerUpSO.healAmount;
         //gameObject.tag = powerUpSO.tag;
+        powerUpDuration = powerUpSO.effectDuration;
         
     }
 
@@ -27,6 +29,10 @@ public class PickUpDetails : MonoBehaviour
     public float IncreaseFireSpeed()
     {
         return speedMultiplier;
+    }
+    public float GetPowerUpDuration()
+    {
+        return powerUpDuration;
     }
 
 

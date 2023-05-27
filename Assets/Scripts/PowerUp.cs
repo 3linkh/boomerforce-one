@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 
 
@@ -11,11 +12,19 @@ public class PowerUp : MonoBehaviour
     PlayerHealth playerHealth;
     PickUpDetails pickUpDetails;
     WeaponBehaviour weaponBehaviour;
+    public Slider powerUpSlider;
+    public bool powerUpIsActive = false;
+    
     private void Start()
     {
         playerHealth = GetComponent<PlayerHealth>(); 
         weaponBehaviour = GetComponentInChildren<WeaponBehaviour>();
         rigidbodyFirstPersonController = GetComponent<RigidbodyFirstPersonController>();
+        powerUpIsActive = false;
+    }
+    private void Update()
+    {   
+        PowerUpTimer();
     }
     private void OnTriggerEnter(Collider other) 
     {
@@ -29,9 +38,9 @@ public class PowerUp : MonoBehaviour
             }
         else if (other.gameObject.tag == "PowerUp" && pickUpDetails.powerUpSO.utilityType)
             {
-                rigidbodyFirstPersonController.movementSettings.ForwardSpeed *= pickUpDetails.IncreaseMovementSpeed();
-                weaponBehaviour.timeBetweenShots /= pickUpDetails.IncreaseFireSpeed();
+                UsePowerUpTypeUtility();
                 Destroy(other.gameObject);
+                powerUpIsActive = true;
             }
             
         }
@@ -48,7 +57,26 @@ public class PowerUp : MonoBehaviour
 
     public void UsePowerUpTypeUtility()
     {
-
+        rigidbodyFirstPersonController.movementSettings.ForwardSpeed *= pickUpDetails.IncreaseMovementSpeed();
+        weaponBehaviour.timeBetweenShots /= pickUpDetails.IncreaseFireSpeed();
+    }
+    public void PowerUpTimer()
+    {
+        if(powerUpIsActive)
+        {
+            powerUpSlider.enabled = true;
+            pickUpDetails.GetPowerUpDuration() -= Time.deltaTime;
+            powerUpSlider.value = pickUpDetails.powerUpDuration;
+            if (pickUpDetails.powerUpDuration <= 0)
+            {
+                powerUpIsActive = false;
+            }
+        }
+        else
+        {
+            powerUpSlider.enabled = false;
+        }
+        
     }
 
 }
