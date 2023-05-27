@@ -19,7 +19,7 @@ MonoBehaviour:
   range: 100
   timeBetweenShots: 0.2
   ammoType: 
-  fireSound: {fileID: 8300000, guid: 18235af6ff9a86541bbd89272b4daa78, type: 3}
+  fireSound: {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
   projectilePrefab: {fileID: 0}
   maxAmmo: 0
   reloadTime: 0

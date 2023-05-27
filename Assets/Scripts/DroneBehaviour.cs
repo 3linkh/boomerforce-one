@@ -9,8 +9,16 @@ public class DroneBehaviour : MonoBehaviour
     public float fireRate = 1f;  // Rate of fire in seconds
     public float detectionRange = 10f;  // Maximum range to detect target objects
     public float height = 5f;
+    public float maxRandomHeightOffset = 1f; // Maximum random height offset for up and down motion
+    public float randomMotionSpeed = 2f; // Speed of the random up and down motion
 
     private float nextFireTime;  // Time for next projectile fire
+    private Vector3 initialPosition; // Initial position of the drone
+
+    private void Start()
+    {
+        initialPosition = transform.position;
+    }
 
     private void Update()
     {
@@ -22,12 +30,16 @@ public class DroneBehaviour : MonoBehaviour
 
         // Check if it's time to fire a projectile
         if (Time.time >= nextFireTime)
-        { 
+        {
             FireProjectile();
             nextFireTime = Time.time + 1f / fireRate;
         }
+
+        // Add random up and down motion
+        float yOffset = Mathf.Sin(Time.time * randomMotionSpeed) * maxRandomHeightOffset;
+        transform.position = new Vector3(transform.position.x, initialPosition.y + yOffset, transform.position.z);
     }
-      
+
     private void FireProjectile()
     {
         if (CheckIfEnemyInRange())
@@ -35,17 +47,16 @@ public class DroneBehaviour : MonoBehaviour
             // Enemy is within range, do something
             Debug.Log("Enemy detected within range, fire projectile");
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            AudioSource audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
         }
         else
         {
             // No enemy within range
             Debug.Log("No enemy within range");
         }
-        
-        // Instantiate a projectile at the current position
-        
-       
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -54,7 +65,6 @@ public class DroneBehaviour : MonoBehaviour
 
     private bool CheckIfEnemyInRange()
     {
-       
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRange);
 
         foreach (Collider collider in colliders)
@@ -69,6 +79,5 @@ public class DroneBehaviour : MonoBehaviour
         // No enemy is within range
         return false;
     }
-
-
 }
+

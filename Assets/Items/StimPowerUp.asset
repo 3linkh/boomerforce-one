@@ -22,6 +22,6 @@ MonoBehaviour:
   damageAmount: 0
   effectMultiplier: 2
   timeBetweenEffect: 0
-  effectDuration: 0
+  effectDuration: 15
   powerUpSound: {fileID: 0}
   projectilePrefab: {fileID: 0}
